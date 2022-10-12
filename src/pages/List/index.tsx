@@ -1,11 +1,30 @@
-import React from 'react'
+import React, { useMemo } from 'react' // usememo memoriza valores
 
 import Selectinput from '../../components/Selectinput';
 import HistoryFinanceCard from '../../components/HistoryFinanceCard';
 import ContentHeader from '../../components/ContentHeader';
+
 import { Container, Content, Filters } from './styles';
 
-const List: React.FC = () => {
+interface IRouteParams {
+    match: {
+        params: {
+            type: string
+        }
+    }
+}
+
+const List: React.FC<IRouteParams> = ({ match }) => {
+
+    const { type } = match.params
+
+    const title = useMemo(() => {
+        return type === 'entry-balance' ? 'Entradas' : 'Saídas'
+    },[type])
+
+    const lineColor = useMemo(() => {
+        return type === 'entry-balance' ? '#f7931b' : '#e44c4e'
+    },[type])
 
     const months = [
         {value: 10, label: 'Outubro'},
@@ -21,7 +40,7 @@ const List: React.FC = () => {
     
     return (
         <Container>
-            <ContentHeader title='Saídas' lineColor='#e44c4e'>
+            <ContentHeader title={title} lineColor={lineColor}>
                 <Selectinput options={months}/>
                 <Selectinput options={years}/>
             </ContentHeader>
