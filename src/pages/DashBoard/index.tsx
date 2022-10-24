@@ -4,6 +4,7 @@ import ContentHeader from '../../components/ContentHeader';
 import Selectinput from '../../components/Selectinput';
 import WalletBox from '../../components/WalletBox';
 import MessageBox from '../../components/MessageBox';
+import PieChartBox from '../../components/PieChartBox';
 
 
 import expenses from '../../repositories/expenses'
@@ -24,12 +25,6 @@ import  {
 const DashBoard: React.FC = () => {
     const [dMonthSelected, setDMonthSelected] = useState<number>(new Date().getMonth() + 1)
     const [dYearSelected, setDYearSelected] = useState<number>(new Date().getFullYear())
-
-    const options = [
-        {value: 'Kaio', label: 'Kaio'},
-        {value: 'Sofia', label: 'Sofia'},
-        {value: 'Yasmin', label: 'Yasmin'}
-    ]
 
     const years = useMemo(() => {
         let uniqueYears: number[] = [];
@@ -135,6 +130,33 @@ const DashBoard: React.FC = () => {
         }
     },[totalBalance])
 
+    const relationExpensesVersusGains = useMemo(() => {
+        const total = totalGains + totalExpenses
+
+        const percentGains = (totalGains / total) * 100
+        const percentExpenses = (totalExpenses / total) * 100
+
+        const data = [
+            {
+                name: "Entradas",
+                value: totalGains,
+                percent: Number(percentGains.toFixed(1)),
+                color: "#e44c4e"
+            },
+
+            {
+                name: "Saídas",
+                value: totalExpenses,
+                percent: Number(percentExpenses.toFixed(1)),
+                color: "#f7931b"
+            }
+        ]
+
+        return data;
+        
+
+    },[totalGains, totalExpenses])
+
     const handleMonthSelected = (month: string) => {
         try{
             const parseMonth = Number(month)
@@ -191,6 +213,8 @@ const DashBoard: React.FC = () => {
                 <MessageBox 
                     {... message}
                 />
+
+                <PieChartBox data={relationExpensesVersusGains} />
 
             </Content>
 
