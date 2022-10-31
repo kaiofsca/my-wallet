@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
     ResponsiveContainer,
     LineChart,
@@ -6,7 +6,7 @@ import {
     XAxis,
     CartesianGrid,
     Tooltip,
-} from 'recharts'
+} from 'recharts';
 
 import formatCurrency from '../../utils/formatCurrency';
 
@@ -15,8 +15,9 @@ import {
     ChartContainer,
     Header,
     LegendContainer,
-    Legend
-} from './styles'
+    Legend,
+}  from './styles';
+
 
 interface IHistoryBoxProps {
     data: {
@@ -33,7 +34,7 @@ const HistoryBox: React.FC<IHistoryBoxProps> = ({
 }) => (
     <Container>
         <Header>
-            <h2> Histórico de saldo </h2>
+            <h2>Histórico de saldo</h2>
 
             <LegendContainer>
                 <Legend color={lineColorAmountEntry}>
@@ -49,34 +50,32 @@ const HistoryBox: React.FC<IHistoryBoxProps> = ({
 
         <ChartContainer>
             <ResponsiveContainer>
-                <LineChart data={data} margin={{ top:5, right: 20, left: 20, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke='#CECECE'/>
-                    <XAxis dataKey="month" stroke='#CECECE' />
-                    <Tooltip formatter={(value) => formatCurrency(Number(value))}/>
+                <LineChart data={data} margin={{ top: 5, right: 20, left: 20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#cecece" />
+                    <XAxis dataKey="month" stroke="#cecece" />
+                    <Tooltip formatter={(value) => formatCurrency(Number(value))} />
                     <Line 
-                        type="monotone"
+                        type="monotone"                
                         dataKey="amountEntry"
-                        name='Entradas'
+                        name="Entradas"
                         stroke={lineColorAmountEntry}
                         strokeWidth={5}
-                        dot={{r:5}}
-                        activeDot={{r:8}}
+                        dot={{ r: 5}}
+                        activeDot={{ r: 8}}
                     />
-
                     <Line 
-                        type="monotone"
+                        type="monotone"                
                         dataKey="amountOutput"
-                        name='Saídas'
+                        name="Saídas"
                         stroke={lineColorAmountOutput}
                         strokeWidth={5}
-                        dot={{r:5}}
-                        activeDot={{r:8}}
+                        dot={{ r: 5}}
+                        activeDot={{ r: 8}}
                     />
                 </LineChart>
             </ResponsiveContainer>
         </ChartContainer>
-        
     </Container>
 )
 
-export default HistoryBox
+export default HistoryBox;
