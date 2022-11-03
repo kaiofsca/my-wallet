@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
+import { ThemeProvider } from './hooks/theme';
+
 import App from './App';
+import dark from './styles/themes/dark';
 
 
 const root = ReactDOM.createRoot(
@@ -9,7 +12,11 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider toggleTheme={function (): void {
+      throw new Error('');
+    }} theme={dark}>
+      <App />
+    </ThemeProvider>
   </React.StrictMode>
 );
 

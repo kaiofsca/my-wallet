@@ -1,4 +1,6 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useCallback } from 'react'
+
+// UseCallback(tbm garante q a função n seja usada mais de uma vez) memoriza a função e o UseMemo memoriza o valor
 
 import ContentHeader from '../../components/ContentHeader';
 import Selectinput from '../../components/Selectinput';
@@ -114,6 +116,14 @@ const DashBoard: React.FC = () => {
                 icon: sadImg
             }
         }
+        else if(totalGains === 0 && totalExpenses === 0) {
+            return {
+                title:"Ops!",
+                description:'Neste mês sua carteira não teve registros.',
+                footerText:'Não fez nenhuma entrada ou saída no mês e no ano selecionado.',
+                icon: embarrassedImg
+            }
+        }
         else if(totalBalance === 0) {
             return {
                 title:"Ufaa!",
@@ -130,26 +140,26 @@ const DashBoard: React.FC = () => {
                 icon: happyImg
             }
         }
-    },[totalBalance])
+    },[totalBalance, totalGains, totalExpenses])
 
     const relationExpensesVersusGains = useMemo(() => {
         const total = totalGains + totalExpenses
 
-        const percentGains = (totalGains / total) * 100
-        const percentExpenses = (totalExpenses / total) * 100
+        const percentGains = Number(((totalGains / total) * 100).toFixed(1))
+        const percentExpenses = Number(((totalExpenses / total) * 100).toFixed(1))
 
         const data = [
             {
                 name: "Entradas",
                 value: totalGains,
-                percent: Number(percentGains.toFixed(1)),
+                percent: percentGains ? percentGains : 0,
                 color: "#e44c4e"
             },
 
             {
                 name: "Saídas",
                 value: totalExpenses,
-                percent: Number(percentExpenses.toFixed(1)),
+                percent: percentExpenses ? percentExpenses : 0,
                 color: "#f7931b"
             }
         ]
@@ -227,18 +237,21 @@ const DashBoard: React.FC = () => {
 
         const total = amountRecurrent + amountEventual;
 
+        const percentRecurrent = Number(((amountRecurrent / total) * 100).toFixed(1));
+        const percentEventual = Number(((amountEventual / total) * 100).toFixed(1))
+
         return [
             {
                 name: 'Recorrentes',
                 amount: amountRecurrent,
-                percent: Number(((amountRecurrent / total) * 100).toFixed(1)),
+                percent: percentRecurrent ? percentRecurrent : 0,
                 color: "#f7931b"
             },
 
             {
                 name: 'Eventuais',
                 amount: amountEventual,
-                percent: Number(((amountEventual / total) * 100).toFixed(1)),
+                percent: percentEventual ? percentEventual : 0,
                 color: "#e44c4e"
             },
         ]
@@ -270,25 +283,28 @@ const DashBoard: React.FC = () => {
 
         const total = amountRecurrent + amountEventual;
 
+        const recurrentPercent = Number(((amountRecurrent / total) * 100).toFixed(1));
+        const eventualPercent = Number(((amountEventual / total) * 100).toFixed(1))
+
         return [
             {
                 name: 'Recorrentes',
                 amount: amountRecurrent,
-                percent: Number(((amountRecurrent / total) * 100).toFixed(1)),
+                percent: recurrentPercent ? recurrentPercent : 0,
                 color: "#f7931b"
             },
 
             {
                 name: 'Eventuais',
                 amount: amountEventual,
-                percent: Number(((amountEventual / total) * 100).toFixed(1)),
+                percent: eventualPercent ? eventualPercent : 0,
                 color: "#e44c4e"
             },
         ]
 
     },[dMonthSelected, dYearSelected])
 
-    const handleMonthSelected = (month: string) => {
+    const handleMonthSelected = useCallback((month: string) => {
         try{
             const parseMonth = Number(month)
             setDMonthSelected(parseMonth)
@@ -296,9 +312,9 @@ const DashBoard: React.FC = () => {
         catch {
             throw new Error('invalid month value. Is accept 0 - 24.')
         }
-    }
+    },[])
 
-    const handleYearSelected = (year: string) => {
+    const handleYearSelected = useCallback((year: string) => {
         try{
             const parseYear = Number(year)
             setDYearSelected(parseYear)
@@ -306,7 +322,7 @@ const DashBoard: React.FC = () => {
         catch(error) {
             throw new Error('invalid year value. Is integer: number')
         }
-    }
+    },[])
 
     return (
         <Container>
