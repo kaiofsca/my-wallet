@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import { ThemeProvider } from './hooks/theme';
+import { AuthProvider } from './hooks/auth';
 
 import App from './App';
 import dark from './styles/themes/dark';
@@ -15,7 +16,9 @@ root.render(
     <ThemeProvider toggleTheme={function (): void {
       throw new Error('');
     }} theme={dark}>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </ThemeProvider>
   </React.StrictMode>
 );
