@@ -14,6 +14,13 @@ export const Container = styled.div`
     border-radius: 7px;
     display: flex;
 
+    @media(max-width: 1200px) {
+        display: flex;
+        flex-direction: column;
+
+        width: 100%;
+        height: auto;
+    }
 `;
 
 export const SideLeft = styled.aside`    
@@ -41,6 +48,11 @@ export const LegendContainer = styled.ul`
     }
     ::-webkit-scrollbar-track {
         background-color: ${props => props.theme.colors.tertiary};
+    }
+
+    @media(max-width: 1200px) {
+        display: flex;
+        height: auto;
     }
     
 `;
