@@ -26,7 +26,7 @@
 - Hooks
 - Context
 
-### 🤖 Link para o deploy: [DASHBOARD](https://dashboardk.netlify.app/)
+### 🤖 Link para o deploy: [DASHBOARD](https://my-wallet-ashen.vercel.app/)
 E-mail e senha para acessar o Dashboard. <br> 
 E-mail: kaio@email.com<br>
 Senha: 123
